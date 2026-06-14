@@ -23,7 +23,7 @@ if left_or_right == "left" or left_or_right == "Left" or left_or_right == "l" or
         door = input("Which door do you choose to enter? Red? Yellow? or Blue? ")
         if door == "Red" or door == "red" or door == "R" or door == "r" or door == "Blue" or door == "B" or door == "b" or door == "blue":
             print("You opened the door to doom. Game Over.")
-        else:
+        elif door == "Yellow" or door == "yellow" or door == "y" or door == "Y":
             print(r''' 
 
         *******************************************************************************
@@ -49,6 +49,9 @@ if left_or_right == "left" or left_or_right == "Left" or left_or_right == "l" or
         ''')
 
             print("You found the treasure! Enjoy the booty!")
+        else:
+            print("That wasn't a choice. You're dead from taking too long.")
+            
     else:
         print("Jumping in water...")
         print("You became a shark snack. RIP.")
