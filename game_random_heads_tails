@@ -1,0 +1,25 @@
+#import random module from python
+import random
+
+# store random integer
+#use this and the multiplier to extend the range.
+random_number_0_to_10 = random.randint(1, 10)
+
+#ask heads or tails
+heads = False
+tails = False
+heads_or_tails = input("Would you like to heads or tails (H or T)? ").lower()
+print(f"The number was {random_number_0_to_10}.")
+
+if random_number_0_to_10 % 2 == 0:
+    heads = True
+    if heads_or_tails == "h":
+        print("Heads! You WIN!")
+    elif heads_or_tails == "t":
+        print("Heads! You LOSE!")
+if not random_number_0_to_10 % 2 == 0:
+    tails = True
+    if heads_or_tails == "t":
+        print("Tails! You WIN!")
+    elif heads_or_tails == "h":
+        print("Heads! You LOSE!")
