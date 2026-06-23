@@ -1,0 +1,39 @@
+#import logo from art.py file
+import art
+import time
+
+print(art.logo)
+time.sleep(2)
+print("\n" * 20)
+
+#create dictionary called 'bid'
+bid = {}
+still_bidding = True
+
+#ask for name and bid price
+def add_bid():
+    name = input("What is your name? :\n").title()
+    price = int(input("What is your bid on this item? :\n$"))
+    # add name and bid price into dictionary as key and value
+    bid[name] = price
+
+add_bid()
+
+highest_bid = 0
+winner = ""
+
+while still_bidding:
+    new_bid = input("Are there other users who want to bid? (y/n)").lower()
+    if new_bid == "y":
+        still_bidding = True
+        print("\n" * 20)
+        add_bid()
+    else:
+        still_bidding = False
+        print("\n" * 20)
+        for name in bid:
+            if bid[name] > highest_bid:
+                highest_bid = bid[name]
+                winner = name
+#announce highest bidder
+print(f"The winner is {winner} with bid ${highest_bid}")
