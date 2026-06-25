@@ -1,0 +1,59 @@
+#import logo from art.py file
+import art
+print(art.logo)
+# functions to add, subtract, multiply and divide.
+def add(n1, n2):
+    return n1 + n2
+def subtract(n1, n2):
+    return n1 - n2
+def multiply(n1, n2):
+    return n1 * n2
+def divide(n1, n2):
+    return n1 / n2
+
+# TODO: Add these 4 functions into a dictionary as the values. Keys = "+", "-", "*", "/"
+
+operations = {
+        "+": add,
+        "-": subtract,
+        "*": multiply,
+        "/": divide
+}
+  
+# Program asks the user to type the first number.
+num1=float(input("Enter the first number: "))
+
+#while loop for continuous calculations
+calculating = True
+while calculating:
+    # Program asks the user to type a mathematical operator (a choice of "+", "-", "*" or "/")
+    operator = input("Add, Subtract, Multiply, or Divide? (a choice of \"+\", \"-\", \"*\" or \"/\"): ")
+
+    # Program asks the user to type the second number.
+    num2=float(input("Enter the second number: "))
+
+    # Program works out the result based on the chosen mathematical operator.
+    calculate = operations[operator](num1, num2)
+    print(float(calculate))
+
+    solution = float(calculate)
+
+    # Program asks if the user wants to continue working with the previous result.
+    again = input("Continue calculations with this number? (y/n): ").lower()
+    if again =="y":
+        calculating = True
+        num1 = int(solution)
+    elif again == "n":
+        new_calc = input("Start over? (y/n): ").lower()
+        if new_calc == "y":
+            num1=float(input("Enter the first number: "))
+            calculating = True
+        else:
+            print(f"Your final result is: {solution}. Goodbye.")
+            calculating = False
+    else:
+        print(f"Your final result is: {solution}. Goodbye.")
+        calculating = False
+
+
+
