@@ -1,0 +1,98 @@
+import art
+import random
+import time
+
+def adjust_for_aces(hand):
+    total = sum(hand)
+    while total > 21 and 11 in hand:
+        hand.remove(11)
+        hand.append(1)
+        total = sum(hand)
+    return total
+
+start_play = input("Would you like to play blackjack? ('y' or 'n'): ").lower()
+
+while start_play:
+    print(art.logo)
+    time.sleep(1)
+    print("\n" * 20)
+    print("Deal!")
+    time.sleep(.5)
+
+    # The deck is unlimited in size. There are no jokers. The Jack/Queen/King all count as 10. Ace can drop to 1
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+    computer_hand = random.choices(cards, k=2)  # deal two random cards from list to computer
+    user_hand = random.choices(cards, k=2)  # deal two random cards from list to user
+    computer_hand_total = sum(computer_hand)  # number total for computer cards
+    user_hand_total = adjust_for_aces(user_hand)
+
+    print(f"Computer's cards: [hidden, {computer_hand[1]}]")
+    print([user_hand])
+    time.sleep(.5)
+
+    user_has_blackjack = False
+
+#check for blackjacks in first round
+    if computer_hand_total == 21:  # does the computer have blackjack?
+        print(f"BLACKJACK! The computer wins with {computer_hand}: {computer_hand_total}! Game Over!")
+    elif user_hand_total == 21: #if the computer doesn't have blackjack, does the user?
+        print(f"BLACKJACK! You WIN with {user_hand}: {user_hand_total}! Game Over!")
+        user_has_blackjack = True
+    else:
+#player's turn: Keep asking until STAY or BUST
+        hit_me = input(f"You have {user_hand}: {user_hand_total}. Would you like to hit? ('y' or 'n'): ").lower()
+        if hit_me == "n":
+            print(f"\nYou are STAYING on {user_hand}: {user_hand_total}. Now the computer will play its hand.\n")
+        while hit_me == "y":
+            if user_hand_total == "21":
+                print(f"\n21! Perfect score! You WIN!:\n")
+                print(f"\nYour hand: {user_hand}: {user_hand_total}")
+                print(f"Computer's hand: {computer_hand}: {computer_hand_total}\n")
+            elif user_hand_total < 21:
+                print(f"\nYou draw another card.\n")
+                user_hand.append(random.choice(cards))  # after a hit
+                user_hand_total = adjust_for_aces(user_hand)
+
+                print(f"You have:{user_hand}: {user_hand_total}")  # showing card values on screen
+                hit_me = "n"
+                time.sleep(.5)
+
+            if user_hand_total < 21:
+                hit_me = input("Would you like to hit? ('y' or 'n'): ").lower()
+
+#Computer's turn: Draws until 17+ if game still open
+    if not user_has_blackjack and computer_hand_total != 21:
+        while computer_hand_total < 17:
+            print(f"The computer draws another card.")
+            time.sleep(.5)
+            computer_hand.append(random.choice(cards))
+            computer_hand_total = adjust_for_aces(computer_hand)
+
+            print(f"\nComputer has:{computer_hand}: {computer_hand_total}\n")
+            time.sleep(.5)
+
+#Decide the winner ONCE, now that both hands are final
+        print(f"Your hand: {user_hand}: {user_hand_total}")
+        print(f"Computer's hand: {computer_hand}: {computer_hand_total}\n")
+        if user_hand_total > 21 and computer_hand_total > 21:
+            print("You BOTH BUSTED! NO WINNER!\n")
+        elif user_hand_total > 21:
+            print("You BUSTED — Computer wins!\n")
+        elif computer_hand_total > 21:
+            print("You WIN - Computer BUSTED!\n")
+        elif user_hand_total > computer_hand_total:
+            print("You WIN!")
+        elif user_hand_total < computer_hand_total:
+            print("Computer WINS!\n")
+        else:
+            print("It's a DRAW!\n")
+
+#Play again?
+    play_again = input("Would you like to play again? ('y' or 'n'): ").lower()
+    if play_again == "y":
+        start_play = True
+    else:
+        print("Thank you for playing! Goodbye.")
+        start_play = False
+        
