@@ -1,0 +1,68 @@
+# Get an ASCII logo for game and "vs"
+# Get random number generator
+# Get a list of celebrities and info - game data (has four keys)
+
+import art
+import random
+import game_data
+
+print(art.logo)
+
+# Choose two celebrities; A and B using random selection
+def play_game():
+    picks = random.sample(game_data.data, 2)
+    return picks[0], picks[1]
+
+play_game()
+
+result = play_game()
+
+celeb_a = result[0]
+celeb_b = result[1]
+lose = False
+
+print(f"{celeb_a['name']} is a {celeb_a['description']} from {celeb_a['country']} with {celeb_a['follower_count']} followers.\n")
+user_score = 0
+
+while not lose:
+    # Compare A and B's follower count
+    print(f" {celeb_a['name'].upper()}  {art.vs}   {celeb_b['name'].upper()}")
+    # Ask user to guess who has more followers, A or B
+    user_select = input(f"Who has more followers? A: {celeb_a['name']}  OR  B: {celeb_b['name']}, a {celeb_b['description']}? (A or B?): ").lower()
+    if celeb_a['follower_count'] > celeb_b['follower_count'] and user_select == 'a':
+        print("Correct! You get a point!\n")
+        print(f"{celeb_a['name']} has {celeb_a['follower_count']} followers, and {celeb_b['name']} has {celeb_b['follower_count']} followers. \n")
+        # If user is right, score a point, B turns to A;
+        user_score += 1
+        lose = False
+        # Choose a new B, start another round.
+        celeb_b = random.choice(game_data.data)
+    elif celeb_b['follower_count'] > celeb_a['follower_count'] and user_select == 'b':
+        print("Correct! You get a point!\n")
+        print(
+            f"{celeb_b['name']} has {celeb_b['follower_count']} followers, and {celeb_a['name']} has {celeb_a['follower_count']} followers. \n")
+        # If user is right, score a point, user selection becomes celeb_a
+        user_score += 1
+        lose = False
+        # Celeb A is the old winner
+        celeb_a = celeb_b
+        # Choose a new B, start another round.
+        celeb_b = random.choice(game_data.data)
+        # Continue until user gets the answer wrong. Game over. Display final Score.
+    else:
+        # Ask user if they want to play again.
+        play_again = input(f"Wrong! Game Over! You got {user_score} correct!\n\n{celeb_a['name']} has {celeb_a['follower_count']} followers, and {celeb_b['name']} has {celeb_b['follower_count']} followers.\n\nPlay again? y/n: ").lower()
+        if play_again == 'y':
+            play_game()
+            user_score = 0
+        else:
+            print("Thank you for playing! Goodbye.")
+
+
+
+
+
+
+
+
+
